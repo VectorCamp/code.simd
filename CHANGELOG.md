@@ -54,4 +54,8 @@ All notable changes to the "code.simd.ai" extension will be documented in this f
 
 ## 1.0.13
 - Disable all ai support and chat
+
+## 1.0.14
+- Publish issue
+
 ---
