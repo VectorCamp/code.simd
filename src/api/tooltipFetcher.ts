@@ -145,18 +145,31 @@ function addViewPerformanceData(
   simd?: string
 ): void {
   const hasGraphData =
-    (proto.llvm_mca && Object.keys(proto.llvm_mca).length > 0) ||
-    (proto.llvm_mca_neon && proto.llvm_mca_neon.length > 0);
+  (proto.llvm_mca && Object.keys(proto.llvm_mca).length > 0) ||
+  (proto.llvm_mca_neon && proto.llvm_mca_neon.length > 0);
+
+  const isSequence =
+  typeof proto.asm === 'string' && proto.asm.trim().toLowerCase() === 'sequence' ||
+  typeof proto.syntax === 'string' && proto.syntax.trim().toLowerCase() === 'sequence';
 
   if (hasGraphData) {
-    const id = `${proto.key}-${Math.random().toString(36).slice(2)}`;
-    (globalThis as any).simdPerformanceCache = (globalThis as any).simdPerformanceCache || {};
-    (globalThis as any).simdPerformanceCache[id] = {
+    const args = {
       key: proto.key,
       simd,
       llvm_mca: proto.llvm_mca,
       llvm_mca_neon: proto.llvm_mca_neon
     };
-    md.appendMarkdown(`*→ [Show Latency/Throughput](command:code.simd.ai.showPerformanceGraph?${JSON.stringify([id])})*\n`);
+    const encodedArgs = encodeURIComponent(JSON.stringify(args));
+    md.appendMarkdown(
+      `\n*→ [Show Latency/Throughput](command:code.simd.ai.showPerformanceGraph?${encodedArgs})*\n`
+    );
+  } else if (isSequence) {
+    md.appendMarkdown(
+      `\n*Latency/Throughput information is not available for this intrinsic as it does not map to a single instruction.*\n`
+    );
+  } else {
+    md.appendMarkdown(
+      `\n*Latency/Throughput data unavailable for this intrinsic.*\n`
+    );
   }
 }

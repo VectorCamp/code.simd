@@ -1,8 +1,8 @@
-# code.simd.ai README
+# code.simd README
 
 Supercharge SIMD development directly in your IDE.
 
-Syntax Highlighting Intel SSE4.2, AVX2, AVX512,Arm NEON,Power VSX,Power IBM-Z and more—right inside your editor. Smart intrinsics highlighting, instant conversions, and seamless dev workflow integration.
+Syntax Highlighting Intel SSE4.2, AVX2, AVX512,Arm NEON,Power VSX,Power IBM-Z and more—right inside your editor. Smart intrinsics highlighting, autocomplete suggestions, and seamless dev workflow integration.
 
 ## Example 1 – VSX
 ![VSX Example](media/power_vsx_example.png)
@@ -15,10 +15,6 @@ Syntax Highlighting Intel SSE4.2, AVX2, AVX512,Arm NEON,Power VSX,Power IBM-Z an
 
 
 ## Features
-<!-- - **AI-assisted SIMD Code Porting**  
-  Automatically translate SIMD code across architectures like Intel SSE4.2, AVX2, AVX512,Arm NEON,Power VSX in real-time.   -->
-
-
 - **Smart Intrinsics Highlighting**  
   Easily read and navigate SIMD intrinsics with syntax highlighting tailored to each architecture.
 
@@ -27,37 +23,16 @@ Syntax Highlighting Intel SSE4.2, AVX2, AVX512,Arm NEON,Power VSX,Power IBM-Z an
     Your browser does not support the video tag.
 </video>
 
-<!-- - **AI Chat Sessions**  
-  Engage with a specialized SIMD AI for explanations, translations, and architecture-specific guidance. Maintain multiple chat sessions across projects. -->
-
-<!-- <video id="demo-video" class="demo-video" autoplay="" muted="" loop="" playsinline="" preload="auto" disablepictureinpicture="" controlslist="nodownload nofullscreen noremoteplayback" src="https://code.simd.ai/images/vids/ai_chat.mp4">
-    <source src="https://code.simd.ai/images/videos/chatting_trimmed_final.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video> -->
 
 - **Standard Architectures**  
   - Standard (requires SIMD.ai paid plan): Intel SSE4.2, AVX2, AVX512,Arm NEON,Power VSX,Power IBM-Z 
-  <!-- - Premium (requires SIMD.ai paid plan): Intel AVX512, Arm NEON, Power VSX -->
-
-<!-- - **Lightning Fast Porting**
-  Translate your SIMD code in seconds, saving hours of manual work. -->
-
-<!-- <video id="demo-video" class="demo-video" autoplay="" muted="" loop="" playsinline="" preload="auto" disablepictureinpicture="" controlslist="nodownload nofullscreen noremoteplayback" src="https://code.simd.ai/images/vids/full_translation.mp4">
-    <source src="https://code.simd.ai/images/videos/chatting_trimmed_final.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-</video> -->
-
-
-<!-- - **Better Results**  
-  Based on SIMD.info data for higher accuracy than generic LLMs, including ChatGPT or Claude.(AI translation disabled for now) -->
-
+  
 ---
 
 ## Requirements
 
 - Visual Studio Code (latest stable version recommended)
-<!-- - Internet connection for AI translation and chat features -->
-- SIMD.ai account for premium architectures(AI translation disabled for now)
+- SIMD.ai account for premium architectures
 
 ---
 
@@ -71,9 +46,8 @@ This extension contributes the following settings:
 
 ## Known issues
 - Users may need to reload VS Code after setting the token to enable syntax highlighting.
-- The translation command may behave unexpectedly if the user switches windows while waiting for a response.
 
-We are actively working to address these issues in an upcoming release.
+We are actively working to address this issue in an upcoming release.
 
 ---
 
@@ -81,58 +55,6 @@ We are actively working to address these issues in an upcoming release.
 - Some architectures (e.g. RVV 1.0,LOONGSON LSX/LASX, MIPS/MSA,Intel AMX, ARM SME2, ARM SVE/SVE2  ) are still in development.  
 
 ---
-
-## Release Notes
-
-### 0.0.1
-- Initial release of **code.simd.ai**.
-- Added AI chat sessions for code guidance.
-
-### 0.0.2
-- Fixes on Hover Tooltip
-
-### 1.0.0
-- Preview changes,Api endpoint changes,Official Release
-
-## 1.0.2
-- Fixed some typos in Details
-
-## 1.0.3
-- Added keywords
-
-## 1.0.4
-- Fix model name
-
-## 1.0.5
-- Fix split window highlighting
-
-## 1.0.6
-- Revert model name
-
-## 1.0.7
-- Fix ai chat issues on session switching
-
-## 1.0.8
-- Add intrinsics autocomplete on typing!
-
-## 1.0.9
-- Datatype highlighting
-- Refactoring backend api
-- Select highlight style
-- Fix bug on first session
-
-## 1.0.10
-- Lighter tone in Power VSX datatypes
-- Add llvm_mca metrics
-- Add Latency/Throughput View
-
-## 1.0.11
-- Fix simd.ai url in package
-
-## 1.0.12
-- Temporarily disable AI support.
----
-
 
 ## Support email
 - Contact us at code.simd.ai@vectorcamp.gr
