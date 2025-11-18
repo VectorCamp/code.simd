@@ -1,8 +1,8 @@
 {
   "name": "code-simd-ai",
-  "displayName": "code.simd.ai",
+  "displayName": "code.simd",
   "description": "VScode plugin for porting of code between different cpu architectures",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "publisher": "VectorCamp",
   "engines": {
     "vscode": "^1.100.0"
@@ -66,17 +66,7 @@
       "activitybar": [
         {
           "id": "code-simd-ai-sidebar",
-          "title": "SIMD.ai",
-          "icon": "media/splash-dark.png"
-        }
-      ]
-    },
-    "views": {
-      "code-simd-ai-sidebar": [
-        {
-          "id": "code.simd.ai.chatView",
-          "name": "SIMD Chat",
-          "type": "webview",
+          "title": "SIMD.info",
           "icon": "media/splash-dark.png"
         }
       ]
@@ -88,129 +78,12 @@
         "category": "SIMD"
       },
       {
-        "command": "code.simd.ai.translateSSEToNeon",
-        "title": "Arm NEON"
-      },
-      {
-        "command": "code.simd.ai.translateNeonToSSE",
-        "title": "Intel SSE4.2"
-      },
-      {
-        "command": "code.simd.ai.translateSSEToVSX",
-        "title": "Power VSX"
-      },
-      {
-        "command": "code.simd.ai.translateVSXToSSE",
-        "title": "Intel SSE4.2"
-      },
-      {
-        "command": "code.simd.ai.translateNeonToVSX",
-        "title": "Power VSX"
-      },
-      {
-        "command": "code.simd.ai.translateVSXToNeon",
-        "title": "Arm NEON"
-      },
-      {
-        "command": "code.simd.ai.acceptTranslation",
-        "title": "Accept Translation"
-      },
-      {
-        "command": "code.simd.ai.rejectTranslation",
-        "title": "Reject Translation"
-      },
-      {
-        "command": "code.simd.ai.editSIMD",
-        "title": "Edit SIMD"
-      },
-      {
         "command": "code.simd.ai.cycleHighlightMode",
         "title": "Cycle SIMD Syntax Highlighting Mode"
       }
     ],
-    "submenus": [
-      {
-        "id": "code.simd.ai.submenu",
-        "label": "SIMD.ai",
-        "group": "navigation"
-      },
-      {
-        "id": "code.simd.ai.submenu.sse",
-        "label": "Translate from Intel SSE4.2 to",
-        "group": "navigation"
-      },
-      {
-        "id": "code.simd.ai.submenu.neon",
-        "label": "Translate from Arm NEON to",
-        "group": "navigation"
-      },
-      {
-        "id": "code.simd.ai.submenu.vsx",
-        "label": "Translate from Power VSX to",
-        "group": "navigation"
-      }
-    ],
     "activationEvents": [
-      "onCommand:code.simd.ai.translateSSEToNeon"
-    ],
-    "menus": {
-      "editor/context": [
-        {
-          "command": "code.simd.ai.editSIMD",
-          "when": "editorHasSelection",
-          "group": "navigation"
-        },
-        {
-          "submenu": "code.simd.ai.submenu",
-          "when": "editorHasSelection",
-          "group": "navigation"
-        }
-      ],
-      "code.simd.ai.submenu": [
-        {
-          "submenu": "code.simd.ai.submenu.sse",
-          "when": "editorHasSelection"
-        },
-        {
-          "submenu": "code.simd.ai.submenu.neon",
-          "when": "editorHasSelection"
-        },
-        {
-          "submenu": "code.simd.ai.submenu.vsx",
-          "when": "editorHasSelection"
-        }
-      ],
-      "code.simd.ai.submenu.sse": [
-        {
-          "command": "code.simd.ai.translateSSEToNeon",
-          "when": "editorHasSelection"
-        },
-        {
-          "command": "code.simd.ai.translateSSEToVSX",
-          "when": "editorHasSelection"
-        }
-      ],
-      "code.simd.ai.submenu.neon": [
-        {
-          "command": "code.simd.ai.translateNeonToSSE",
-          "when": "editorHasSelection"
-        },
-        {
-          "command": "code.simd.ai.translateNeonToVSX",
-          "when": "editorHasSelection"
-        }
-      ],
-      "code.simd.ai.submenu.vsx": [
-        {
-          "command": "code.simd.ai.translateVSXToSSE",
-          "when": "editorHasSelection"
-        },
-        {
-          "command": "code.simd.ai.translateVSXToNeon",
-          "when": "editorHasSelection"
-        }
-      ]
-    }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
@@ -250,6 +123,7 @@
     "dist",
     "media",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ]
 }
