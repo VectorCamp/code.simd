@@ -15,6 +15,8 @@ Syntax Highlighting Intel SSE4.2, AVX2, AVX512,Arm NEON,Power VSX,Power IBM-Z an
 
 
 ## Features
+- **Free Intrinsics Highlighting**  
+  Basic syntax highlighting for Intel SSE4.2 intrinsics.
 - **Smart Intrinsics Highlighting**  
   Easily read and navigate SIMD intrinsics with syntax highlighting tailored to each architecture.
 
