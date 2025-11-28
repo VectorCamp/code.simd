@@ -39,29 +39,27 @@ export async function fetchDatatypesByArch(): Promise<Record<string, string[]>> 
     return {};
   }
 
-  const endpoint = `${API_BASE}/v1/plugin-datatypes/get-datatypes-list`;
 
   try {
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({ api_key: apiKey })
+    const url = `${API_BASE}/api/datatypes/?api_key=${apiKey}`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' }
     });
 
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status} ${res.statusText}`);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} ${response.statusText}`);
     }
 
-    const data = await res.json();
-    if (!data || typeof data !== 'object' || !data.datatypes_list) {
+    const data = await response.json();
+
+    if (!data || typeof data !== 'object') {
       throw new Error('Invalid JSON structure');
     }
 
     // console.log('✅ Datatypes fetched successfully');
-    return data.datatypes_list as Record<string, string[]>; 
+    return data as Record<string, string[]>;
 
   } catch (err) {
     console.error('❌ Failed to fetch datatypes:', err);
