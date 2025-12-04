@@ -30,7 +30,7 @@ import { registerShowPerformanceGraphCommand } from './showPerformanceGraph';
 
 export function activate(context: vscode.ExtensionContext) {
 
-	console.log('Extension "code.simd.ai" is now active!');
+	console.log('Extension "code.simd.info" is now active!');
 	
 	context.subscriptions.push(
 		vscode.languages.registerCodeLensProvider({ scheme: 'file', language: '*' }, new TranslationCodeLensProvider())

@@ -57,4 +57,7 @@ All notable changes to the "code.simd.ai" extension will be documented in this f
 
 ## 1.0.14
 - Brings back default basic syntax highlighting for Intel SSE4.2 intrinsics.
+
+## 1.0.15
+- Simd.info endpoints
 ---

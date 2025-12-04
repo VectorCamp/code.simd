@@ -31,7 +31,7 @@ export async function fetchIntrinsicNames(): Promise<string[]> {
 
   // if user has not specified api token, use predifined to only see Intel intrinsics and some Preview, disabled for now
   if (!apiToken) {
-    vscode.window.showInformationMessage("⚠️ Please get your API token from https://simd.ai");
+    vscode.window.showInformationMessage("⚠️ Please get your API token from https://simd.info");
     apiToken = PLUGIN_DEFAULT_TOKEN;
   }
 
@@ -40,15 +40,13 @@ export async function fetchIntrinsicNames(): Promise<string[]> {
   }
 
   try {
-    const response = await fetch(`${API_BASE}/v1/plugin-intrinsics-list/get-intrinsics-list`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        api_key: apiToken
-      })
+    const url = `${API_BASE}/api/intrinsic-names/?api_key=${apiToken}`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' }
     });
+
 
     if (!response.ok) {
       console.error('Failed to fetch intrinsic names:', response.statusText);
@@ -59,21 +57,18 @@ export async function fetchIntrinsicNames(): Promise<string[]> {
     
     // Access the nested structure
     if (
-      typeof json === 'object' &&
-      json !== null &&
-      'intrinsics_list' in json &&
-      typeof json.intrinsics_list === 'object' &&
-      json.intrinsics_list !== null &&
-      'intrinsics' in json.intrinsics_list &&
-      typeof json.intrinsics_list.intrinsics === 'string'
+        json &&
+        typeof json === "object" &&
+        "intrinsics" in json &&
+        typeof json.intrinsics === "string"
     ) {
-      const text = json.intrinsics_list.intrinsics;
-      cachedIntrinsics = text
-        .split(/\s+/)
-        .map((s: string) => s.trim())
-        .filter(Boolean);
-      
-      return cachedIntrinsics || [];
+      const text = json.intrinsics;
+        cachedIntrinsics = text
+          .split(/\s+/)
+          .map((s: string) => s.trim())
+          .filter(Boolean);
+        
+        return cachedIntrinsics || [];
     }
 
     console.error('Unexpected response structure:', json);
@@ -123,44 +118,39 @@ export async function fetchIntrinsicInfo(word: string): Promise<TooltipData | nu
 
   // if user has not specified api token, use predifined to only see Intel intrinsics
   if (!apiToken) {
-    vscode.window.showInformationMessage("⚠️ Please get your API token from https://simd.ai");
+    vscode.window.showInformationMessage("⚠️ Please get your API token from https://simd.info");
     apiToken = PLUGIN_DEFAULT_TOKEN;
   }
   
   try {
-    const response = await fetch(`${API_BASE}/v1/plugin-intrinsic-info/get-intrinsics-info`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        api_key: apiToken,
-        intrinsic_name: word
-      })
+    const encoded = encodeURIComponent(word);
+    const url = `${API_BASE}/api/c_intrinsic/${encoded}?api_key=${apiToken}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: { "Accept": "application/json" }
     });
 
     if (!response.ok) {
-      console.error(`Failed to fetch intrinsic for "${word}":`, response.statusText);
+      console.error(`Failed to fetch intrinsic for "${word}":`, response.status, response.statusText);
       return null;
     }
 
-    const data: any = await response.json();
-    
-    // Check if intrinsic_info exists in the response
-    if (!data.intrinsic_info) {
+    const data = await response.json();
+
+    // backend returns null when intrinsic not found (your design)
+    if (!data || typeof data !== "object") {
       console.error(`No intrinsic info found for "${word}"`);
       return null;
     }
-    
-    // Extract and transform the intrinsic_info to match TooltipData structure
-    const intrinsicInfo = data.intrinsic_info;
-    const tooltipData: TooltipData = {
-      ...intrinsicInfo
-    };
-    
+
+    // data already matches TooltipData structure
+    const tooltipData = data as TooltipData;
+
     return tooltipData;
-  } catch (err) {
-    console.error(`Error fetching intrinsic for "${word}":`, err);
+
+  } catch (error) {
+    console.error(`Error fetching intrinsic info for "${word}":`, error);
     return null;
   }
 }

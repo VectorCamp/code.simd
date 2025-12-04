@@ -42,7 +42,7 @@ Syntax Highlighting Intel SSE4.2, AVX2, AVX512,Arm NEON,Power VSX,Power IBM-Z an
 
 This extension contributes the following settings:
 
-* `code.simd.ai.apiToken`: Your SIMD AI API token. Get it from [https://simd.ai/](https://simd.ai/).
+* `code.simd.info.apiToken`: Your simd.info API token. Get it from [https://simd.info/](https://simd.info/).
 
 ---
 
@@ -59,7 +59,7 @@ We are actively working to address this issue in an upcoming release.
 ---
 
 ## Support email
-- Contact us at code.simd.ai@vectorcamp.gr
+- Contact us at support@simd.info
 
 
 **Enjoy SIMD coding made easy!**
