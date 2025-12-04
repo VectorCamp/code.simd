@@ -31,7 +31,7 @@ export async function fetchIntrinsicNames(): Promise<string[]> {
 
   // if user has not specified api token, use predifined to only see Intel intrinsics and some Preview, disabled for now
   if (!apiToken) {
-    vscode.window.showInformationMessage("⚠️ Please get your API token from https://simd.ai");
+    vscode.window.showInformationMessage("⚠️ Please get your API token from https://simd.info");
     apiToken = PLUGIN_DEFAULT_TOKEN;
   }
 
@@ -145,9 +145,7 @@ export async function fetchIntrinsicInfo(word: string): Promise<TooltipData | nu
     }
 
     // data already matches TooltipData structure
-    const tooltipData: TooltipData = {
-      ...data
-    };
+    const tooltipData = data as TooltipData;
 
     return tooltipData;
 

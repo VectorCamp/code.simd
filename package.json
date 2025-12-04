@@ -2,7 +2,7 @@
   "name": "code-simd-ai",
   "displayName": "code.simd",
   "description": "VScode plugin for porting of code between different cpu architectures",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "publisher": "VectorCamp",
   "engines": {
     "vscode": "^1.100.0"
@@ -54,10 +54,10 @@
       "type": "object",
       "title": "Code SIMD ai Configuration",
       "properties": {
-        "code.simd.ai.apiToken": {
+        "code.simd.info.apiToken": {
           "type": "string",
           "default": "",
-          "description": "Your SIMD AI API token. Get it from https://simd.ai/",
+          "description": "Your simd.info API token. Get it from https://simd.info/",
           "secret": true
         }
       }

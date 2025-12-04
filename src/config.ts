@@ -16,10 +16,10 @@
 import * as vscode from 'vscode';
 
 export function getApiToken(): string | undefined {
-  const config = vscode.workspace.getConfiguration('code.simd.ai');
+  const config = vscode.workspace.getConfiguration('code.simd.info');
   const token = config.get<string>('apiToken');
   if (!token) {
-    vscode.window.showErrorMessage('API token missing. Please set "code.simd.ai.apiToken" in your settings.');
+    vscode.window.showErrorMessage('API token missing. Please set "code.simd.info.apiToken" in your settings.');
   }
   return token;
 }
@@ -30,6 +30,6 @@ export function getApiToken(): string | undefined {
 // dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // export const PLUGIN_DEFAULT_TOKEN = 'sk-b5204816b07e49ec8096c9e8b34f28bb'; // 'get your token from simd.ai';
-export const PLUGIN_DEFAULT_TOKEN = 'Zk5WmDfbDasCan755a5xPT1AkhlGKTSw6UmEGfvpOrTSjcxBGEMJIOrSr2O8XBUA'; // 'get your token from simd.info';
+export const PLUGIN_DEFAULT_TOKEN = 'Ur2FOtUe8k6o8mlWMSJMa6gWZV3_v_F0Cm8yuKiK5H6njUAW5tO-vVLSrSWJpuvg'; // 'get your token from simd.info';
 export const API_BASE = 'https://simd.info';
 export const MODEL_NAME = 'SIMD-ai-2506.1.ai:24b';

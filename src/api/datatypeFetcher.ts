@@ -34,7 +34,7 @@ import * as vscode from 'vscode';
 export async function fetchDatatypesByArch(): Promise<Record<string, string[]>> {
   const apiKey = getApiToken();
   if (!apiKey) {
-    vscode.window.showInformationMessage("⚠️ Please get your API token from https://simd.ai");
+    vscode.window.showInformationMessage("⚠️ Please get your API token from https://simd.info");
     console.warn('⚠️ API key missing');
     return {};
   }
