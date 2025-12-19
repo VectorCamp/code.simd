@@ -60,4 +60,7 @@ All notable changes to the "code.simd.ai" extension will be documented in this f
 
 ## 1.0.15
 - Simd.info endpoints
+
+## 1.0.16
+- Added asm, asm syntax and example in the performance view
 ---

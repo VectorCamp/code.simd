@@ -15,13 +15,28 @@
 */
 
 import fetch from 'node-fetch';
-(globalThis as any).fetch = fetch;
+if (!(globalThis as any).fetch) {
+  (globalThis as any).fetch = fetch;
+}
+
 
 import * as vscode from 'vscode';
 import { fetchIntrinsicInfo } from './simdAi';
 // process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // Dev only — allow self-signed certs
+import { simdFullData } from '../intrinsicsCache';
+
 
 const tooltipCache: Record<string, vscode.MarkdownString> = {};
+
+function normalizeProto(proto: any, archOrData: any) {
+  return {
+    ...proto,
+    asm: proto.asm || archOrData.asm || 'N/A',
+    syntax: proto.syntax || archOrData.syntax || 'N/A',
+    example: proto.example || archOrData.example || 'N/A',
+    llvm_mca: proto.llvm_mca || proto.llvm_mca_neon || {},
+  };
+}
 
 export async function fetchTooltip(word: string): Promise<vscode.MarkdownString> {
   if (tooltipCache[word]) {return tooltipCache[word];}
@@ -57,7 +72,8 @@ export async function fetchTooltip(word: string): Promise<vscode.MarkdownString>
             const line = `${proto.output || 'void'} result = ${proto.key}(${inputList});`;
             md.appendMarkdown('```c\n' + line + '\n```\n');
 
-            addViewPerformanceData(md, proto, simd);
+            const normalizedProto = normalizeProto(proto, arch); 
+            addViewPerformanceData(md, normalizedProto, simd);
           }
         }
       }
@@ -83,10 +99,13 @@ export async function fetchTooltip(word: string): Promise<vscode.MarkdownString>
           const line = `${proto.output || 'void'} result = ${proto.key}(${inputList});`;
           md.appendMarkdown('```c\n' + line + '\n```\n');
           
-          addViewPerformanceData(md, proto, data.simd || data.engine);
+          const normalizedProto = normalizeProto(proto, data);  
+          addViewPerformanceData(md, normalizedProto, data.simd || data.engine);
         }
       }
     }
+    
+
 
     tooltipCache[word] = md;
     return md;
@@ -138,7 +157,6 @@ export async function fetchDatatypeTooltip(name: string): Promise<string> {
     return '';
   }
 }
-
 function addViewPerformanceData(
   md: vscode.MarkdownString, 
   proto: any, 
@@ -153,15 +171,46 @@ function addViewPerformanceData(
   typeof proto.syntax === 'string' && proto.syntax.trim().toLowerCase() === 'sequence';
 
   if (hasGraphData) {
-    const args = {
+    const existing = simdFullData[proto.key];
+    
+    const protoData = {
       key: proto.key,
-      simd,
-      llvm_mca: proto.llvm_mca,
-      llvm_mca_neon: proto.llvm_mca_neon
+      inputs: proto.inputs,
+      output: proto.output,
+      asm: proto.asm,
+      syntax: proto.syntax,
+      example: proto.example,
+      llvm_mca: proto.llvm_mca || proto.llvm_mca_neon || {},
     };
-    const encodedArgs = encodeURIComponent(JSON.stringify(args));
+    
+    if (existing) {
+      const sig = `${protoData.output}|${protoData.key}|${(protoData.inputs || []).join(',')}`;
+      const exists = existing.prototypes.some(p =>
+        `${p.output}|${p.key}|${(p.inputs || []).join(',')}` === sig
+      );
+      if (!exists) {
+        existing.prototypes.push(protoData);
+      }
+    } else {
+      const cleanTooltip = md.value.replace(
+        /\*→ \[Show Latency\/Throughput\][^\n]*\n?/g,
+        ''
+      );
+      
+      simdFullData[proto.key] = {
+        key: proto.key,
+        simd,
+        llvm_mca: proto.llvm_mca,
+        llvm_mca_neon: proto.llvm_mca_neon,
+        tooltip: cleanTooltip,
+        prototypes: [protoData],
+      };
+    }
+    
+    const commandUri = `command:code.simd.ai.showPerformanceGraph?${encodeURIComponent(JSON.stringify([proto.key]))}`;
+    
     md.appendMarkdown(
-      `\n*→ [Show Latency/Throughput](command:code.simd.ai.showPerformanceGraph?${encodedArgs})*\n`
+      `\n*→ [Show Latency/Throughput](${commandUri})*\n`
     );
   } else if (isSequence) {
     md.appendMarkdown(

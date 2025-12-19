@@ -13,3 +13,24 @@ export async function getIntrinsics(): Promise<string[]> {
   }
   return intrinsics;
 }
+
+export interface SimdPrototype {
+  key: string;
+  inputs?: string[];
+  output?: string;
+  asm?: string;
+  syntax?: string;
+  example?: string;
+  llvm_mca?: any;
+}
+
+export interface SimdFullEntry {
+  key: string;
+  simd?: string;
+  llvm_mca?: any;
+  llvm_mca_neon?: any;
+  tooltip: string;
+  prototypes: SimdPrototype[];
+}
+
+export const simdFullData: Record<string, SimdFullEntry> = {};
