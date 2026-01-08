@@ -2,7 +2,7 @@
   "name": "code-simd-ai",
   "displayName": "code.simd",
   "description": "VScode plugin for porting of code between different cpu architectures",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "publisher": "VectorCamp",
   "engines": {
     "vscode": "^1.100.0"
@@ -59,6 +59,11 @@
           "default": "",
           "description": "Your simd.info API token. Get it from https://simd.info/",
           "secret": true
+        },
+        "code.simd.info.enableLLVM": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable LLVM/Clang integration for MCA analysis (requires clang and llvm-mca-21 to be installed)"
         }
       }
     },
@@ -80,8 +85,29 @@
       {
         "command": "code.simd.ai.cycleHighlightMode",
         "title": "Cycle SIMD Syntax Highlighting Mode"
+      },
+      {
+      "command": "code.simd.ai.analyzeMca",
+      "title": "SIMD: Analyze Selection with LLVM-MCA"
+    }
+  ],
+  "keybindings": [
+    {
+      "command": "code.simd.ai.analyzeMca",
+      "key": "ctrl+shift+m",
+      "mac": "cmd+shift+m",
+      "when": "editorTextFocus && editorHasSelection && code.simd.info.enableLLVM"
+    }
+  ],
+  "menus": {
+    "editor/context": [
+      {
+        "command": "code.simd.ai.analyzeMca",
+        "when": "editorHasSelection && code.simd.info.enableLLVM",
+        "group": "simd@1"
       }
-    ],
+    ]
+  },
     "activationEvents": [
     ]
   },

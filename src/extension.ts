@@ -27,11 +27,24 @@ import { highlightIntrinsicsAndDatatypes, initIntrinsicHighlighting, deactivateH
 import { activate as activateCompletion } from './completionProvider';
 
 import { registerShowPerformanceGraphCommand } from './showPerformanceGraph';
+import { registerLlvmMcaCommand } from './llvmMcaAnalyzer';
+
 
 export function activate(context: vscode.ExtensionContext) {
 
 	console.log('Extension "code.simd.info" is now active!');
 	
+	const enableLLVM = vscode.workspace.getConfiguration('code.simd.info').get<boolean>('enableLLVM', false);
+
+    vscode.commands.executeCommand('setContext', 'code.simd.info.enableLLVM', enableLLVM);
+
+    vscode.workspace.onDidChangeConfiguration(e => {
+        if (e.affectsConfiguration('code.simd.info.enableLLVM')) {
+            const updated = vscode.workspace.getConfiguration('code.simd.info').get<boolean>('enableLLVM', false);
+            vscode.commands.executeCommand('setContext', 'code.simd.info.enableLLVM', updated);
+        }
+    });
+
 	context.subscriptions.push(
 		vscode.languages.registerCodeLensProvider({ scheme: 'file', language: '*' }, new TranslationCodeLensProvider())
 	);
@@ -48,6 +61,8 @@ export function activate(context: vscode.ExtensionContext) {
 	activateCompletion(context);
 	
 	registerShowPerformanceGraphCommand(context);
+
+	registerLlvmMcaCommand(context);
 }
 
 export function deactivate() {
