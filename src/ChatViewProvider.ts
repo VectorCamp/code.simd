@@ -90,7 +90,7 @@ export class ChatViewProvider implements vscode.WebviewViewProvider {
       const reply = await callSimdAiWithHistory(contextMessages);
       await saveChatHistory(this.context, sessionId, userText, reply);
 
-      // � send reply back to the same session, even if user switched
+      //  send reply back to the same session, even if user switched
       webview.postMessage({ type: 'response', text: reply, sessionId });
     } catch (err: any) {
       webview.postMessage({ type: 'responseError', error: String(err), sessionId });
