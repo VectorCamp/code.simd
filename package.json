@@ -63,7 +63,7 @@
         "code.simd.info.enableLLVM": {
           "type": "boolean",
           "default": false,
-          "description": "Enable LLVM/Clang integration for MCA analysis (requires clang and llvm-mca-21 to be installed)"
+          "description": "Enable LLVM/Clang integration for MCA analysis (requires clang and llvm-mca to be installed)"
         }
       }
     },

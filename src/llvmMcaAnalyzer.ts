@@ -247,7 +247,7 @@ typedef unsigned short ushort;
 
         // Build MCA command - always use -mcpu for llvm-mca
         const mcpuForMca = config.mcpu || (config.useNative ? 'native' : config.march);
-        const mcaCmd = `llvm-mca-21 -mcpu=${mcpuForMca} ${asmFile}`;
+        const mcaCmd = `llvm-mca -mcpu=${mcpuForMca} ${asmFile}`;
         console.log('Running:', mcaCmd);
         const { stdout } = await execAsync(mcaCmd);
 
